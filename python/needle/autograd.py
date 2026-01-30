@@ -1,11 +1,11 @@
 """Core data structures."""
-import python.needle.ops as ops
+import needle.ops as ops
 from .backend_numpy import Device, all_devices, cpu
 from typing import List, Optional, NamedTuple, Tuple, Union, Dict
 from collections import namedtuple
 import numpy
 
-import python.needle.init as init
+import needle.init as init
 
 # needle version
 LAZY_MODE = False

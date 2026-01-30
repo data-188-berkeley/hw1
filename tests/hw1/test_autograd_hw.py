@@ -2,7 +2,7 @@ from apps.simple_ml import *
 import numdifftools as nd
 
 import numpy as np
-import python.needle as ndl
+import needle as ndl
 
 
 ##############################################################################
