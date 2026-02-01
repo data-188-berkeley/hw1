@@ -30,7 +30,7 @@ class EWiseAdd(TensorOp):
         """
         return a + b
 
-    def gradient(self, out_grad: Tensor, node: Tensor) -> tuple[Tensor, Tensor]
+    def gradient(self, out_grad: Tensor, node: Tensor) -> tuple[Tensor, Tensor]:
         return out_grad, out_grad
 
 
