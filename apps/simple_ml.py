@@ -9,7 +9,7 @@ import sys
 import needle as ndl
 
 
-def parse_mnist(image_filename, label_filename):
+def parse_mnist(image_filename: str, label_filename: str) -> tuple[np.ndarray, np.ndarray]:
     """Read an images and labels file in MNIST format.  See this page:
     http://yann.lecun.com/exdb/mnist/ for a description of the file format.
 

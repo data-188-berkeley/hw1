@@ -364,13 +364,27 @@ class Tensor(Value):
 
 
 
-def compute_gradient_of_variables(output_tensor, out_grad):
-    """Take gradient of output node with respect to each node in node_list.
 
-    Store the computed result in the grad field of each Variable.
+def compute_gradient_of_variables(output_tensor: Tensor, out_grad: Tensor) -> dict[Tensor, list[Tensor]]:
+    """Take gradient of output node with respect to each node in node_list.
+    In more detail: calculate the adjoints (both partial and full) for each Value
+    reachable from `output_tensor`.
+
+    For leaf nodes (ie tensor.is_leaf() is True), store its full adjoint in the tensor.grad
+    instance variable.
+
+    For nodes with tensor.requires_grad=False, this should skip processing this node.
+
+    Args:
+        output_tensor (Tensor): Output node of computation graph, typically the output of a loss.
+        out_grad (Tensor): d(loss)/d(output_tensor). Typically is all ones, with shape=output_tensor.shape.
+    Returns:
+        node_to_output_grads_list (dict[Tensor, list[Tensor]]): stores partial adjoints.
+            [Tensor v_i] -> [Tensor v_ij, ...]
     """
     # a map from node to a list of gradient contributions from each output node
-    node_to_output_grads_list: Dict[Tensor, List[Tensor]] = {}
+    # Stores partial adjoints for each node: [Tensor v_i] -> [Tensor v_ij, ...]
+    node_to_output_grads_list: dict[Tensor, list[Tensor]] = {}
     # Special note on initializing gradient of
     # We are really taking a derivative of the scalar reduce_sum(output_node)
     # instead of the vector output_node. But this is the common case for loss function.
@@ -382,15 +396,22 @@ def compute_gradient_of_variables(output_tensor, out_grad):
     ### BEGIN YOUR SOLUTION
     raise NotImplementedError()
     ### END YOUR SOLUTION
+    return node_to_output_grads_list
 
 
 def find_topo_sort(node_list: List[Value]) -> List[Value]:
     """Given a list of nodes, return a topological sort list of nodes ending in them.
+    You may assume that the graph is acyclic (contains no cycles).
 
     A simple algorithm is to do a post-order DFS traversal on the given nodes,
     going backwards based on input edges. Since a node is added to the ordering
     after all its predecessors are traversed due to post-order DFS, we get a topological
     sort.
+
+    Tip: unlike most topographic sort explanations (including the one seen in lecture),
+    this function should use "backpointers" (eg via `node.inputs`) to traverse the graph.
+    This detail will slightly modify the implementation of topo sort introduced in lecture,
+    but in spirit should largely remain the same.
     """
     ### BEGIN YOUR SOLUTION
     raise NotImplementedError()
